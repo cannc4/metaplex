@@ -29,6 +29,7 @@ import {
   useMint,
   useMeta,
   BidStateType,
+  MetadataCategory,
 } from '@oyster/common';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { MintInfo, Token } from '@solana/spl-token';
@@ -58,9 +59,9 @@ export const AuctionItem = ({
       index === 0
         ? ''
         : `translate(${index * 15}px, ${-40 * index}px) scale(${Math.max(
-            1 - 0.2 * index,
-            0,
-          )})`,
+          1 - 0.2 * index,
+          0,
+        )})`,
     transformOrigin: 'right bottom',
     position: index !== 0 ? 'absolute' : 'static',
     zIndex: -1 * index,
@@ -69,9 +70,11 @@ export const AuctionItem = ({
     boxShadow: 'rgb(0 0 0 / 10%) 12px 2px 20px 14px',
     aspectRatio: '1/1',
   };
+  console.log('hERE', id)
   return (
     <ArtContent
       pubkey={id}
+      category={MetadataCategory.HTML}
       className="artwork-image stack-item"
       style={style}
       active={active}
@@ -363,8 +366,7 @@ export const AuctionView = () => {
                     {nftCount === undefined ? (
                       <Skeleton paragraph={{ rows: 0 }} />
                     ) : (
-                      `${tokenInfo?.name || 'Custom Token'} ($${
-                        tokenInfo?.symbol || 'CUSTOM'
+                      `${tokenInfo?.name || 'Custom Token'} ($${tokenInfo?.symbol || 'CUSTOM'
                       })`
                     )}
                     <ClickToCopy

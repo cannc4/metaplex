@@ -176,16 +176,16 @@ const HTMLContent = ({
   files?: (MetadataFile | string)[];
   artView?: boolean;
 }) => {
-  if (!artView) {
-    return (
-      <CachedImageContent
-        uri={uri}
-        className={className}
-        preview={preview}
-        style={style}
-      />
-    );
-  }
+  // if (!artView) {
+  //   return (
+  //     <CachedImageContent
+  //       uri={uri}
+  //       className={className}
+  //       preview={preview}
+  //       style={style}
+  //     />
+  //   );
+  // }
   // const [data, setData] = useState()
   const htmlURL: any =
     files && files.length > 0 && typeof files[0] === 'string'
@@ -250,29 +250,30 @@ export const ArtContent = ({
     category = data.properties.category;
   }
 
+  console.log('yolo', animationURL)
   animationURL = animationURL || '';
 
   const animationUrlExt = new URLSearchParams(
     getLast(animationURL.split('?')),
   ).get('ext');
 
-  if (
-    allowMeshRender &&
-    (category === 'vr' ||
-      animationUrlExt === 'glb' ||
-      animationUrlExt === 'gltf')
-  ) {
-    return (
-      <MeshArtContent
-        uri={uri}
-        animationUrl={animationURL}
-        className={className}
-        style={style}
-        files={files}
-      />
-    );
-  }
-
+  // if (
+  //   allowMeshRender &&
+  //   (category === 'vr' ||
+  //     animationUrlExt === 'glb' ||
+  //     animationUrlExt === 'gltf')
+  // ) {
+  //   return (
+  //     <MeshArtContent
+  //       uri={uri}
+  //       animationUrl={animationURL}
+  //       className={className}
+  //       style={style}
+  //       files={files}
+  //     />
+  //   );
+  // }
+  console.log(category)
   const content =
     category === 'video' ? (
       <VideoArtContent
@@ -301,6 +302,7 @@ export const ArtContent = ({
         style={style}
       />
     );
+  console.log(content)
 
   return (
     <div
