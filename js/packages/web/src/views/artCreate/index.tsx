@@ -408,8 +408,7 @@ const UploadStep = (props: {
 
             if (sizeKB < 25) {
               setCoverArtError(
-                `The file ${file.name} is too small. It is ${
-                  Math.round(10 * sizeKB) / 10
+                `The file ${file.name} is too small. It is ${Math.round(10 * sizeKB) / 10
                 }KB but should be at least 25KB.`,
               );
               return;
@@ -498,7 +497,7 @@ const UploadStep = (props: {
 
             try {
               // Validate URL and save
-              new URL(customURL);
+              // new URL(customURL);
               setCustomURL(customURL);
               setCustomURLErr('');
             } catch (e) {
@@ -1261,9 +1260,8 @@ const Congrats = (props: {
   const newTweetURL = () => {
     const params = {
       text: "I've created a new NFT artwork on Metaplex, check it out!",
-      url: `${
-        window.location.origin
-      }/#/art/${props.nft?.metadataAccount.toString()}`,
+      url: `${window.location.origin
+        }/#/art/${props.nft?.metadataAccount.toString()}`,
       hashtags: 'NFT,Crypto,Metaplex',
       // via: "Metaplex",
       related: 'Metaplex,Solana',

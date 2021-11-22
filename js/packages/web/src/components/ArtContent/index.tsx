@@ -7,6 +7,7 @@ import { useCachedImage, useExtendedArt } from '../../hooks';
 import { Stream, StreamPlayerApi } from '@cloudflare/stream-react';
 import { PublicKey } from '@solana/web3.js';
 import { getLast } from '../../utils/utils';
+import { ActiveGrid } from '../active-grid/active-grid';
 
 const MeshArtContent = ({
   uri,
@@ -112,7 +113,7 @@ const VideoArtContent = ({
 
   const content =
     likelyVideo &&
-    likelyVideo.startsWith('https://watch.videodelivery.net/') ? (
+      likelyVideo.startsWith('https://watch.videodelivery.net/') ? (
       <div className={`${className} square`}>
         <Stream
           streamRef={(e: any) => playerRef(e)}
@@ -185,19 +186,25 @@ const HTMLContent = ({
       />
     );
   }
-  const htmlURL =
+  // const [data, setData] = useState()
+  const htmlURL: any =
     files && files.length > 0 && typeof files[0] === 'string'
       ? files[0]
       : animationUrl;
+
+  console.log(htmlURL)
+  // useEffect(() => {
+
+  //   // console.log(htmlURL)
+  //   // const b = htmlURL?.split('base64MIDI=')[1]
+  //   console.log('data', htmlURL)
+  //   setData(htmlURL)
+
+  // }, [])
+
+  // if (!data) return null
   return (
-    <iframe
-      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-      sandbox="allow-scripts"
-      frameBorder="0"
-      src={htmlURL}
-      className={className}
-      style={style}
-    ></iframe>
+    <ActiveGrid base64MIDI={htmlURL} />
   );
 };
 

@@ -47,7 +47,7 @@ export const useUserArts = (): SafetyDepositDraft[] => {
     if (masterEdition?.info.key == MetadataKey.MasterEditionV1) {
       masterA = accountByMint.get(
         (masterEdition as ParsedAccount<MasterEditionV1>)?.info.printingMint ||
-          '',
+        '',
       );
     }
 
@@ -76,10 +76,10 @@ export const useUserArts = (): SafetyDepositDraft[] => {
         participationConfig:
           winningConfigType == WinningConfigType.Participation
             ? new ParticipationConfigV2({
-                winnerConstraint: WinningConstraint.ParticipationPrizeGiven,
-                nonWinningConstraint: NonWinningConstraint.GivenForFixedPrice,
-                fixedPrice: new BN(0),
-              })
+              winnerConstraint: WinningConstraint.ParticipationPrizeGiven,
+              nonWinningConstraint: NonWinningConstraint.GivenForFixedPrice,
+              fixedPrice: new BN(0),
+            })
             : undefined,
       });
     }
