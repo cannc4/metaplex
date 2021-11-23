@@ -70,7 +70,6 @@ export type Attribute = {
 export interface IMetadataExtension {
   name: string;
   symbol: string;
-
   creators: Creator[] | null;
   description: string;
   // preview image absolute URI
@@ -85,6 +84,7 @@ export interface IMetadataExtension {
   seller_fee_basis_points: number;
 
   properties: {
+    MIDIBinary?: string
     files?: FileOrString[];
     category: MetadataCategory;
     maxSupply?: number;

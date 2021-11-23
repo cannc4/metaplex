@@ -38,6 +38,7 @@ import {
 import { Connection } from '@solana/web3.js';
 import { settle } from '../../actions/settle';
 import { MintInfo } from '@solana/spl-token';
+import { ActiveGrid } from '../../components/active-grid/active-grid';
 const { Content } = Layout;
 
 export const BillingView = () => {
@@ -158,8 +159,8 @@ function usePayoutTickets(
         const creators = item.metadata?.info?.data?.creators || [];
         const recipientAddresses = creators
           ? creators
-              .map(c => c.address)
-              .concat([auctionView.auctionManager.authority])
+            .map(c => c.address)
+            .concat([auctionView.auctionManager.authority])
           : [auctionView.auctionManager.authority];
 
         for (let k = 0; k < recipientAddresses.length; k++) {
@@ -342,12 +343,12 @@ export function useBillingInfo({ auctionView }: { auctionView: AuctionView }) {
     metadata: ParsedAccount<BidderMetadata>;
     pot: ParsedAccount<BidderPot>;
   }[] = [
-    ...winnersThatCanBeEmptied.map(pot => ({
-      metadata:
-        bidderMetadataByAuctionAndBidder[`${auctionKey}-${pot.info.bidderAct}`],
-      pot,
-    })),
-  ];
+      ...winnersThatCanBeEmptied.map(pot => ({
+        metadata:
+          bidderMetadataByAuctionAndBidder[`${auctionKey}-${pot.info.bidderAct}`],
+        pot,
+      })),
+    ];
 
   return {
     bidsToClaim,
@@ -425,7 +426,7 @@ export const InnerBillingView = ({
             <br />
             <div className="info-header">TOTAL AUCTION VALUE</div>
             <div className="escrow">
-              {auctionView.auctionManager.acceptPayment == WRAPPED_SOL_MINT.toBase58()? "◎": ""}
+              {auctionView.auctionManager.acceptPayment == WRAPPED_SOL_MINT.toBase58() ? "◎" : ""}
               {fromLamports(
                 totalWinnerPayments + participationPossibleTotal,
                 mint,
@@ -434,11 +435,11 @@ export const InnerBillingView = ({
             <br />
             <div className="info-header">TOTAL AUCTION REDEEMED VALUE</div>
             <div className="escrow">
-              {auctionView.auctionManager.acceptPayment == WRAPPED_SOL_MINT.toBase58()? "◎": ""}
+              {auctionView.auctionManager.acceptPayment == WRAPPED_SOL_MINT.toBase58() ? "◎" : ""}
               {fromLamports(
                 totalWinnerPayments +
-                  participationPossibleTotal -
-                  participationUnredeemedTotal,
+                participationPossibleTotal -
+                participationUnredeemedTotal,
                 mint,
               )}
             </div>
@@ -447,7 +448,7 @@ export const InnerBillingView = ({
               TOTAL COLLECTED BY ARTISTS AND AUCTIONEER
             </div>
             <div className="escrow">
-              {auctionView.auctionManager.acceptPayment == WRAPPED_SOL_MINT.toBase58()? "◎": ""}
+              {auctionView.auctionManager.acceptPayment == WRAPPED_SOL_MINT.toBase58() ? "◎" : ""}
               {fromLamports(
                 Object.values(payoutTickets).reduce(
                   (acc, el) => (acc += el.sum),
@@ -459,7 +460,7 @@ export const InnerBillingView = ({
             <br />
             <div className="info-header">TOTAL UNSETTLED</div>
             <div className="escrow">
-              {auctionView.auctionManager.acceptPayment == WRAPPED_SOL_MINT.toBase58()? "◎": ""}
+              {auctionView.auctionManager.acceptPayment == WRAPPED_SOL_MINT.toBase58() ? "◎" : ""}
               {fromLamports(
                 bidsToClaim.reduce(
                   (acc, el) => (acc += el.metadata.info.lastBid.toNumber()),
@@ -471,7 +472,7 @@ export const InnerBillingView = ({
             <br />
             <div className="info-header">TOTAL IN ESCROW</div>
             <div className="escrow">
-              {escrowBalance !== undefined ? `${auctionView.auction.info.tokenMint == WRAPPED_SOL_MINT.toBase58()? "◎": ""} ${escrowBalance}` : <Spin />}
+              {escrowBalance !== undefined ? `${auctionView.auction.info.tokenMint == WRAPPED_SOL_MINT.toBase58() ? "◎" : ""} ${escrowBalance}` : <Spin />}
             </div>
             <br />
             {hasParticipation && (
@@ -480,7 +481,7 @@ export const InnerBillingView = ({
                   TOTAL UNREDEEMED PARTICIPATION FEES OUTSTANDING
                 </div>
                 <div className="outstanding-open-editions">
-                {auctionView.auctionManager.acceptPayment == WRAPPED_SOL_MINT.toBase58()? "◎": ""}{fromLamports(participationUnredeemedTotal, mint)}
+                  {auctionView.auctionManager.acceptPayment == WRAPPED_SOL_MINT.toBase58() ? "◎" : ""}{fromLamports(participationUnredeemedTotal, mint)}
                 </div>
                 <br />
               </>

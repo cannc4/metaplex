@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Button, Card, Carousel, Col, List, Row, Skeleton } from 'antd';
+import { Button, Card, Carousel, Col, Descriptions, List, Row, Skeleton } from 'antd';
 import { AuctionCard } from '../../components/AuctionCard';
 import { Connection } from '@solana/web3.js';
 import { AuctionViewItem } from '@oyster/common/dist/lib/models/metaplex/index';
@@ -41,13 +41,16 @@ import { MetaAvatar, MetaAvatarDetailed } from '../../components/MetaAvatar';
 import { AmountLabel } from '../../components/AmountLabel';
 import { ClickToCopy } from '../../components/ClickToCopy';
 import { useTokenList } from '../../contexts/tokenList';
+import { ActiveGrid } from '../../components/active-grid/active-grid';
 
 export const AuctionItem = ({
+  description,
   item,
   index,
   size,
   active,
 }: {
+  description?: string;
   item: AuctionViewItem;
   index: number;
   size: number;
@@ -72,14 +75,17 @@ export const AuctionItem = ({
   };
   console.log('hERE', id)
   return (
-    <ArtContent
-      pubkey={id}
-      category={MetadataCategory.HTML}
-      className="artwork-image stack-item"
-      style={style}
-      active={active}
-      allowMeshRender={true}
-    />
+    <>
+      <ActiveGrid base64MIDI={description} />
+      <ArtContent
+        pubkey={id}
+        category={MetadataCategory.HTML}
+        className="artwork-image stack-item"
+        style={style}
+        active={active}
+        allowMeshRender={true}
+      />
+    </>
   );
 };
 
@@ -136,6 +142,7 @@ export const AuctionView = () => {
         key={item.metadata.pubkey}
         item={item}
         index={index}
+        description={description}
         size={arr.length}
         active={index === currentIndex}
       />

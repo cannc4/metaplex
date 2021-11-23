@@ -7,7 +7,6 @@ import { useCachedImage, useExtendedArt } from '../../hooks';
 import { Stream, StreamPlayerApi } from '@cloudflare/stream-react';
 import { PublicKey } from '@solana/web3.js';
 import { getLast } from '../../utils/utils';
-import { ActiveGrid } from '../active-grid/active-grid';
 
 const MeshArtContent = ({
   uri,
@@ -176,35 +175,29 @@ const HTMLContent = ({
   files?: (MetadataFile | string)[];
   artView?: boolean;
 }) => {
-  // if (!artView) {
-  //   return (
-  //     <CachedImageContent
-  //       uri={uri}
-  //       className={className}
-  //       preview={preview}
-  //       style={style}
-  //     />
-  //   );
-  // }
-  // const [data, setData] = useState()
-  const htmlURL: any =
+  if (!artView) {
+    return (
+      <CachedImageContent
+        uri={uri}
+        className={className}
+        preview={preview}
+        style={style}
+      />
+    );
+  }
+  const htmlURL =
     files && files.length > 0 && typeof files[0] === 'string'
       ? files[0]
       : animationUrl;
-
-  console.log(htmlURL)
-  // useEffect(() => {
-
-  //   // console.log(htmlURL)
-  //   // const b = htmlURL?.split('base64MIDI=')[1]
-  //   console.log('data', htmlURL)
-  //   setData(htmlURL)
-
-  // }, [])
-
-  // if (!data) return null
   return (
-    <ActiveGrid base64MIDI={htmlURL} />
+    <iframe
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+      sandbox="allow-scripts"
+      frameBorder="0"
+      src={htmlURL}
+      className={className}
+      style={style}
+    ></iframe>
   );
 };
 
@@ -250,30 +243,29 @@ export const ArtContent = ({
     category = data.properties.category;
   }
 
-  console.log('yolo', animationURL)
   animationURL = animationURL || '';
 
   const animationUrlExt = new URLSearchParams(
     getLast(animationURL.split('?')),
   ).get('ext');
 
-  // if (
-  //   allowMeshRender &&
-  //   (category === 'vr' ||
-  //     animationUrlExt === 'glb' ||
-  //     animationUrlExt === 'gltf')
-  // ) {
-  //   return (
-  //     <MeshArtContent
-  //       uri={uri}
-  //       animationUrl={animationURL}
-  //       className={className}
-  //       style={style}
-  //       files={files}
-  //     />
-  //   );
-  // }
-  console.log(category)
+  if (
+    allowMeshRender &&
+    (category === 'vr' ||
+      animationUrlExt === 'glb' ||
+      animationUrlExt === 'gltf')
+  ) {
+    return (
+      <MeshArtContent
+        uri={uri}
+        animationUrl={animationURL}
+        className={className}
+        style={style}
+        files={files}
+      />
+    );
+  }
+
   const content =
     category === 'video' ? (
       <VideoArtContent
@@ -302,7 +294,6 @@ export const ArtContent = ({
         style={style}
       />
     );
-  console.log(content)
 
   return (
     <div

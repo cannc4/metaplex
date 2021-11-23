@@ -9,7 +9,6 @@ import {
   unprotect
 } from 'mobx-state-tree'
 import { Grid } from './Grid'
-
 let store: IStore | undefined
 
 const Root = types
@@ -27,6 +26,7 @@ const Root = types
   }))
   .actions((self: any) => ({
     async afterCreate() {
+
       unprotect(self)
     },
     setLock(flag: boolean) {

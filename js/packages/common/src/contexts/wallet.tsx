@@ -71,7 +71,6 @@ export const WalletModal: FC = () => {
       <Button
         className="phantom-button metaplex-button"
         onClick={() => {
-          console.log(phatomWallet.name);
           select(phatomWallet.name);
           close();
         }}
@@ -171,9 +170,9 @@ export const WalletModalProvider: FC<{ children: ReactNode }> = ({
       const keyToDisplay =
         base58.length > 20
           ? `${base58.substring(0, 7)}.....${base58.substring(
-              base58.length - 7,
-              base58.length,
-            )}`
+            base58.length - 7,
+            base58.length,
+          )}`
           : base58;
 
       notify({

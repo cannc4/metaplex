@@ -62,7 +62,7 @@ export const ArtCreateView = () => {
   const history = useHistory();
   const { width } = useWindowDimensions();
   const [nftCreateProgress, setNFTcreateProgress] = useState<number>(0);
-
+  const [binary, setBinary] = useState<any>()
   const [step, setStep] = useState<number>(0);
   const [stepsVisible, setStepsVisible] = useState<boolean>(true);
   const [isMinting, setMinting] = useState<boolean>(false);
@@ -100,7 +100,7 @@ export const ArtCreateView = () => {
 
   // store files
   const mint = async () => {
-    const metadata = {
+    const metadata: any = {
       name: attributes.name,
       symbol: attributes.symbol,
       creators: attributes.creators,
@@ -117,7 +117,8 @@ export const ArtCreateView = () => {
     };
     setStepsVisible(false);
     setMinting(true);
-
+    console.log(binary)
+    if (binary) metadata.MIDIBinary = binary
     try {
       const _nft = await mintNFT(
         connection,
@@ -191,6 +192,8 @@ export const ArtCreateView = () => {
             <InfoStep
               attributes={attributes}
               files={files}
+              setBinary={(b) => setBinary(b)}
+              binary={binary}
               setAttributes={setAttributes}
               confirm={() => gotoStep(3)}
             />
@@ -607,9 +610,12 @@ const InfoStep = (props: {
   files: File[];
   setAttributes: (attr: IMetadataExtension) => void;
   confirm: () => void;
+  setBinary: any;
+  binary: string;
 }) => {
   const [creators, setCreators] = useState<Array<UserValue>>([]);
   const [royalties, setRoyalties] = useState<Array<Royalty>>([]);
+
   const { image, animation_url } = useArtworkFiles(
     props.files,
     props.attributes,
@@ -694,6 +700,19 @@ const InfoStep = (props: {
               allowClear
             />
           </label>
+          <label className="action-field">
+            <span className="field-title">MIDI Binary</span>
+            <Input.TextArea
+              className="input textarea"
+              placeholder="Max 500 characters"
+              value={props.binary}
+              onChange={info =>
+                props.setBinary(info.target.value)
+              }
+              allowClear
+            />
+          </label>
+
           <label className="action-field">
             <span className="field-title">Maximum Supply</span>
             <InputNumber

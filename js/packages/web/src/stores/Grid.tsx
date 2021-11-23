@@ -161,7 +161,6 @@ export const Grid = types
           index: i,
           length: 16
         })
-        console.log('heee')
 
         patterns.push(pat)
         const sampler = new Sampler()

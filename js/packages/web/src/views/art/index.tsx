@@ -21,6 +21,7 @@ import { sendSignMetadata } from '../../actions/sendSignMetadata';
 import { ViewOn } from '../../components/ViewOn';
 import { ArtType } from '../../types';
 import { ArtMinting } from '../../components/ArtMinting';
+import { ActiveGrid } from '../../components/active-grid/active-grid';
 
 const { Content } = Layout;
 
@@ -31,6 +32,10 @@ export const ArtView = () => {
 
   const connection = useConnection();
   const art = useArt(id);
+
+  console.log('art', art)
+
+
   let badge = '';
   let maxSupply = '';
   if (art.type === ArtType.NFT) {
@@ -45,8 +50,12 @@ export const ArtView = () => {
   } else if (art.type === ArtType.Print) {
     badge = `${art.edition} of ${art.supply}`;
   }
-  const { ref, data } = useExtendedArt(id);
+  const { ref, data }: any = useExtendedArt(id);
+  let MIDIBinary
+  if (data && data.MIDIBinary) {
 
+    MIDIBinary = data!.MIDIBinary
+  }
   // const { userAccounts } = useUserAccounts();
 
   // const accountByMint = userAccounts.reduce((prev, acc) => {
@@ -88,6 +97,7 @@ export const ArtView = () => {
             md={{ span: 12 }}
             style={{ paddingRight: '30px' }}
           >
+            {MIDIBinary && <ActiveGrid base64MIDI={MIDIBinary} />}
             <ArtContent
               style={{ width: '100%', height: 'auto', margin: '0 auto' }}
               height={300}
