@@ -44,13 +44,13 @@ import { useTokenList } from '../../contexts/tokenList';
 import { ActiveGrid } from '../../components/active-grid/active-grid';
 
 export const AuctionItem = ({
-  description,
+  MIDIBinary,
   item,
   index,
   size,
   active,
 }: {
-  description?: string;
+    MIDIBinary?: string;
   item: AuctionViewItem;
   index: number;
   size: number;
@@ -76,7 +76,7 @@ export const AuctionItem = ({
   console.log('hERE', id)
   return (
     <>
-      <ActiveGrid base64MIDI={description} />
+      {MIDIBinary && <ActiveGrid base64MIDI={MIDIBinary} />}
       <ArtContent
         pubkey={id}
         category={MetadataCategory.HTML}
@@ -94,9 +94,11 @@ export const AuctionView = () => {
   const { id } = useParams<{ id: string }>();
   const { endpoint } = useConnectionConfig();
   const auction = useAuction(id);
+  // console.log(auction)
   const [currentIndex, setCurrentIndex] = useState(0);
   const art = useArt(auction?.thumbnail.metadata.pubkey);
-  const { ref, data } = useExtendedArt(auction?.thumbnail.metadata.pubkey);
+  const { ref, data }: any = useExtendedArt(auction?.thumbnail.metadata.pubkey);
+  console.log('dataCI', data)
   const creators = useCreators(auction);
   const { pullAuctionPage } = useMeta();
   useEffect(() => {
@@ -142,7 +144,7 @@ export const AuctionView = () => {
         key={item.metadata.pubkey}
         item={item}
         index={index}
-        description={description}
+        MIDIBinary={data && data!.MIDIBinary ? data!.MIDIBinary : null}
         size={arr.length}
         active={index === currentIndex}
       />
