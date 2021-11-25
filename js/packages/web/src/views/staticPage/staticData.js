@@ -1,6 +1,6 @@
 export const data = {
   headContent: {
-    title: 'We are Metaplex',
+    title: 'PatternLib',
     subtitle: 'About Us',
     bannerImage: '/main-banner.png',
   },

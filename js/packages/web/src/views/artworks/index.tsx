@@ -74,6 +74,14 @@ export const ArtworksView = () => {
   const refreshButton = connected && storeIndexer.length !== 0 &&
   <Button className="refresh-button" onClick={() => pullAllMetadata()}>Refresh</Button>
 
+  // TODO:
+  const pubKey = useWallet().publicKey! ? useWallet().publicKey! : null
+  let isCreator: any; 
+
+  if (pubKey) {
+    isCreator = Object.keys(useMeta().whitelistedCreatorsByCreator).includes(useWallet().publicKey!.toBase58())
+  }
+  
   return (
     <Layout style={{ margin: 0, marginTop: 30 }}>
       <Content style={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -98,7 +106,7 @@ export const ArtworksView = () => {
                   {artworkGrid}
                 </TabPane>
               )}
-              {connected && (
+              {isCreator && connected && (
                 <TabPane
                   tab={<span className="tab-title">Created</span>}
                   key={ArtworkViewState.Created}

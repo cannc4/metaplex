@@ -53,14 +53,14 @@ export const Settings = ({
               </div>
             </Tooltip>
 
-            <Link
+            {/* <Link
               to={`/profile/${publicKey?.toBase58()}`}
               style={{
                 color: 'rgba(255, 255, 255, 0.7)',
               }}
             >
               View profile
-            </Link>
+            </Link> */}
           </>
         )}
         <br />

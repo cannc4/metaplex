@@ -14,16 +14,17 @@ import {
 import { ConnectButton } from '@oyster/common';
 
 const getDefaultLinkActions = (connected: boolean) => {
+  
   return [
-    <Link to={`/`} key={'explore'}>
-      <Button className="app-btn">Explore</Button>
-    </Link>,
+    // <Link to={`/`} key={'explore'}>
+    //   <Button className="app-btn">Explore</Button>
+    // </Link>,
     <Link to={`/artworks`} key={'artwork'}>
-      <Button className="app-btn">{connected ? 'My Items' : 'Artwork'}</Button>
+      <Button className="app-btn">{connected ? 'My Patterns' : 'Artwork'}</Button>
     </Link>,
-    <Link to={`/artists`} key={'artists'}>
-      <Button className="app-btn">Creators</Button>
-    </Link>,
+    // <Link to={`/artists`} key={'artists'}>
+    //   <Button className="app-btn">Creators</Button>
+    // </Link>,
   ];
 };
 
@@ -44,8 +45,8 @@ const DefaultActions = ({ vertical = false }: { vertical?: boolean }) => {
 const MetaplexMenu = () => {
   const { width } = useWindowDimensions();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const { connected } = useWallet();
-
+  const { connected, publicKey } = useWallet();
+  
   if (width < 768)
     return (
       <>
@@ -109,7 +110,8 @@ const MetaplexMenu = () => {
 export const LogoLink = () => {
   return (
     <Link to={`/`}>
-      <img src={'/metaplex-logo.svg'} />
+      {/* <img src={'/metaplex-logo.svg'} /> */}
+      {'PATTERN LIB'}
     </Link>
   );
 };

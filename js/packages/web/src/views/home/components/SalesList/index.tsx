@@ -36,13 +36,13 @@ export const SalesListView = () => {
 
   return (
     <>
-      <Banner
+      {/* <Banner
         src="/main-banner.svg"
         headingText="MIDI Patterns "
         subHeadingText="Buy Pattern NFTs."
         actionComponent={<HowToBuyModal buttonClassName="secondary-btn" />}
         useBannerBg
-      />
+      /> */}
       <Layout>
         <Content style={{ display: 'flex', flexWrap: 'wrap' }}>
           <Col style={{ width: '100%', marginTop: 32 }}>
