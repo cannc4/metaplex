@@ -287,7 +287,7 @@ const Home = (props: HomeProps) => {
         if (!status?.err) {
           setAlertState({
             open: true,
-            message: 'Congratulations! Mint succeeded!',
+            message: 'Mint succeeded!',
             severity: 'success',
           });
         } else {
@@ -463,7 +463,7 @@ const Home = (props: HomeProps) => {
       setIsMinting(false);
       setAlertState({
         open: true,
-        message: `Congratulations! Bid ${
+        message: `Bid ${
           fairLaunch?.ticket.data ? 'updated' : 'inserted'
         }!`,
         severity: 'success',
@@ -517,7 +517,7 @@ const Home = (props: HomeProps) => {
       setAlertState({
         open: true,
         message:
-          'Congratulations! Funds withdrawn. This is an irreversible action.',
+          'Funds withdrawn. This is an irreversible action.',
         severity: 'success',
       });
     } catch (e) {
@@ -543,7 +543,7 @@ const Home = (props: HomeProps) => {
       setIsMinting(false);
       setAlertState({
         open: true,
-        message: 'Congratulations! Ticket punched!',
+        message: 'Ticket punched!',
         severity: 'success',
       });
     } catch (e) {

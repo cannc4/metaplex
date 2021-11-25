@@ -16,7 +16,6 @@ export const ActionConfirmation = (props: {
         alignItems: 'center',
       }}
     >
-      <h2>Congratulations!</h2>
       <div>Your action has been successfully executed</div>
       <div className="success-icon" />
       <Link to="/dashboard">

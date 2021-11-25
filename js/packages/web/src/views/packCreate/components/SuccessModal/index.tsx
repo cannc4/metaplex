@@ -14,8 +14,8 @@ const SuccessModal = ({
 }): ReactElement => {
   return (
     <MetaplexOverlay visible={shouldShow}>
-      <Confetti />
-      <h1
+      {/* <Confetti /> */}
+      {/* <h1
         className="title"
         style={{
           fontSize: '3rem',
@@ -23,7 +23,7 @@ const SuccessModal = ({
         }}
       >
         Congratulations
-      </h1>
+      </h1> */}
       <p
         style={{
           color: 'white',

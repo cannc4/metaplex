@@ -819,7 +819,7 @@ export const AuctionCard = ({
       </div>
 
       <MetaplexOverlay visible={showBidPlaced}>
-        <Confetti />
+        {/* <Confetti /> */}
         <h1
           className="title"
           style={{
@@ -845,8 +845,8 @@ export const AuctionCard = ({
       </MetaplexOverlay>
 
       <MetaplexOverlay visible={showEndingBidModal}>
-        <Confetti />
-        <h1
+        {/* <Confetti /> */}
+        {/* <h1
           className="title"
           style={{
             fontSize: '3rem',
@@ -854,7 +854,7 @@ export const AuctionCard = ({
           }}
         >
           Congratulations
-        </h1>
+        </h1> */}
         <p
           style={{
             color: 'white',
@@ -863,7 +863,7 @@ export const AuctionCard = ({
           }}
         >
           Your sale has been ended please view your NFTs in{' '}
-          <Link to="/artworks">My Items</Link>.
+          <Link to="/artworks">Library</Link>.
         </p>
         <Button
           onClick={() => setShowEndingBidModal(false)}
@@ -874,8 +874,8 @@ export const AuctionCard = ({
       </MetaplexOverlay>
 
       <MetaplexOverlay visible={showRedeemedBidModal}>
-        <Confetti />
-        <h1
+        {/* <Confetti /> */}
+        {/* <h1
           className="title"
           style={{
             fontSize: '3rem',
@@ -883,7 +883,7 @@ export const AuctionCard = ({
           }}
         >
           Congratulations
-        </h1>
+        </h1> */}
         <p
           style={{
             color: 'white',
@@ -892,7 +892,7 @@ export const AuctionCard = ({
           }}
         >
           Your {auctionView.isInstantSale ? 'purchase' : 'bid'} has been
-          redeemed please view your NFTs in <Link to="/artworks">My Items</Link>
+          redeemed please view your NFTs in <Link to="/artworks">Library</Link>
           .
         </p>
         <Button

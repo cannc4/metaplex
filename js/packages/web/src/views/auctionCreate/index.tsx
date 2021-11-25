@@ -145,7 +145,7 @@ export interface AuctionState {
 export const AuctionCreateView = () => {
   const connection = useConnection();
   const wallet = useWallet();
-  const { whitelistedCreatorsByCreator, storeIndexer } = useMeta();
+  const { pullAllMetadata, whitelistedCreatorsByCreator, storeIndexer } = useMeta();
   const { step_param }: { step_param: string } = useParams();
   const history = useHistory();
   const mint = useMint(QUOTE_MINT);
@@ -519,6 +519,7 @@ export const AuctionCreateView = () => {
       storeIndexer,
     );
     setAuctionObj(_auctionObj);
+    await pullAllMetadata()
   };
 
   const categoryStep = (
@@ -2061,7 +2062,7 @@ const Congrats = (props: {
         }}
       >
         <div className="waiting-title">
-          Congratulations! Your auction is now live.
+          Your auction is now live.
         </div>
         <div className="congrats-button-container">
           <Button
@@ -2082,7 +2083,7 @@ const Congrats = (props: {
           </Button>
         </div>
       </div>
-      <Confetti />
+      {/* <Confetti /> */}
     </>
   );
 };

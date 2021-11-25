@@ -213,8 +213,8 @@ export const ArtMinting = ({ id, onMint }: ArtMintingProps) => {
           </Modal>
 
           <MetaplexOverlay visible={showCongrats}>
-            <Confetti />
-            <h1
+            {/* <Confetti /> */}
+            {/* <h1
               className="title"
               style={{
                 fontSize: '3rem',
@@ -222,7 +222,7 @@ export const ArtMinting = ({ id, onMint }: ArtMintingProps) => {
               }}
             >
               Congratulations
-            </h1>
+            </h1> */}
             <p
               style={{
                 color: 'white',
@@ -231,7 +231,7 @@ export const ArtMinting = ({ id, onMint }: ArtMintingProps) => {
               }}
             >
               New editions have been minted please view your NFTs in{' '}
-              <Link to="/artworks">My Items</Link>.
+              <Link to="/artworks">Library</Link>.
             </p>
             <Button
               onClick={async () => {

@@ -34,6 +34,7 @@ import {
   WRAPPED_SOL_MINT,
   getAssetCostToStore,
   LAMPORT_MULTIPLIER,
+  useMeta,
 } from '@oyster/common';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { Connection } from '@solana/web3.js';
@@ -60,6 +61,7 @@ export const ArtCreateView = () => {
   const [alertMessage, setAlertMessage] = useState<string>();
   const { step_param }: { step_param: string } = useParams();
   const history = useHistory();
+  const { pullAllMetadata} = useMeta();
   const { width } = useWindowDimensions();
   const [nftCreateProgress, setNFTcreateProgress] = useState<number>(0);
   const [binary, setBinary] = useState<any>()
@@ -132,6 +134,7 @@ export const ArtCreateView = () => {
 
       if (_nft) setNft(_nft);
       setAlertMessage('');
+      pullAllMetadata()
     } catch (e: any) {
       setAlertMessage(e.message);
     } finally {
@@ -1304,7 +1307,7 @@ const Congrats = (props: {
 
   return (
     <>
-      <div className="waiting-title">Congratulations, you created an NFT!</div>
+      {/* <div className="waiting-title">Congratulations, you created an NFT!</div> */}
       <div className="congrats-button-container">
         <Button
           className="metaplex-button"
@@ -1330,7 +1333,7 @@ const Congrats = (props: {
           <span>&gt;</span>
         </Button>
       </div>
-      <Confetti />
+      {/* <Confetti /> */}
     </>
   );
 };
