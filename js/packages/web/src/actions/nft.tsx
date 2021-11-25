@@ -53,6 +53,7 @@ const uploadToArweave = async (data: FormData): Promise<IArweaveResult> => {
       body: data,
     },
   );
+  console.log('uploadToArweave', resp)
 
   if (!resp.ok) {
     return Promise.reject(
@@ -116,6 +117,16 @@ export const mintNFT = async (
       }),
     },
   };
+
+  // if (metadata.MIDIBinary){
+
+  //   const midiFile = {
+  //     type: "MIDI",
+  //     uri: metadata.MIDIBinary
+  //   }
+  //   metadataContent.properties.files.push(midiFile)
+  //   console.log(metadataContent)
+  // }
 
   const realFiles: File[] = [
     ...files,
@@ -228,8 +239,8 @@ export const mintNFT = async (
   const data = new FormData();
   data.append('transaction', txid);
   data.append('env', endpoint);
-  if (metadata.MIDIBinary) data.append('MIDIBinary', metadata.MIDIBinary)
 
+  console.log(realFiles)
   const tags = realFiles.reduce(
     (acc: Record<string, Array<{ name: string; value: string }>>, f) => {
       acc[f.name] = [{ name: 'mint', value: mintKey }];
@@ -241,8 +252,9 @@ export const mintNFT = async (
   data.append('tags', JSON.stringify(tags));
   realFiles.map(f => data.append('file[]', f));
   // TODO: convert to absolute file name for image
-
+  console.log(data)
   const result: IArweaveResult = await uploadToArweave(data);
+  console.log(result)
   progressCallback(6);
 
   const metadataFile = result.messages?.find(
