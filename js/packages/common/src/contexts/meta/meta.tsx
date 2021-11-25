@@ -121,14 +121,15 @@ export function MetaProvider({ children = null as any }) {
 
   async function pullAllSiteData() {
     if (isLoading) return state;
-    if (!storeAddress) {
-      if (isReady) {
-        setIsLoading(false);
-      }
-      return state;
-    } else if (!state.store) {
-      setIsLoading(true);
-    }
+    // TODO
+    // if (!storeAddress) {
+    //   if (isReady) {
+    //     setIsLoading(false);
+    //   }
+    //   return state;
+    // } else if (!state.store) {
+    //   setIsLoading(true);
+    // }
     console.log('------->Query started');
 
     const nextState = await loadAccounts(connection);

@@ -53,11 +53,8 @@ export const StoreProvider: FC<{
 
   useEffect(() => {
     console.log(`STORE_OWNER_ADDRESS: ${initOwnerAddress}`);
-    if (initOwnerAddress && !initStoreAddress) {
+    if (initOwnerAddress) {
       setStoreForOwner(initOwnerAddress);
-    } else {
-      setProgramIds(initStoreAddress); // fallback
-      console.log(`CUSTOM STORE FROM ENV: ${initStoreAddress}`);
     }
   }, [initOwnerAddress]);
 
