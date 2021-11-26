@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardProps } from 'antd';
 import { ArtContent } from '../ArtContent';
-import { AuctionView, useArt, useCreators } from '../../hooks';
+import { AuctionView, useArt, useAuction, useCreators } from '../../hooks';
 import { AmountLabel } from '../AmountLabel';
 import { MetaAvatar } from '../MetaAvatar';
 import { AuctionCountdown } from '../AuctionNumbers';
@@ -44,10 +44,10 @@ export const AuctionRenderCard = (props: AuctionCard) => {
           />
         </div>
         <div className={'art-name'}>{name}</div>
-        <div className={'art-auction-info'}>
+        {!auctionView?.isInstantSale && <div className={'art-auction-info'}>
           <span className={'info-message'}>ENDING IN</span>
           <AuctionCountdown auctionView={auctionView} labels={false} />
-        </div>
+        </div>}
       </div>
       <div className="card-bid-info">
         <span className={'text-uppercase info-message'}>{status}</span>

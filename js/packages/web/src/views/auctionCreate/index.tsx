@@ -1898,7 +1898,13 @@ const ReviewStep = (props: {
       props.connection.getMinimumBalanceForRentExemption(MintLayout.span),
       props.connection.getMinimumBalanceForRentExemption(MAX_METADATA_LEN),
     ]);
-    // TODO: add
+    const calculateCost = async () => {
+      const res = await Promise.resolve(rentCall)
+      const cost = (res[0] + res[1]) / LAMPORTS_PER_SOL
+      setCost(cost)
+    }
+    calculateCost()
+    
   }, [setCost]);
 
   let item = props.attributes.items?.[0];

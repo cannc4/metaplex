@@ -22,7 +22,7 @@ export const ArtworksView = () => {
   const { connected, publicKey } = useWallet();
   const ownedMetadata = useUserArts();
   const createdMetadata = useCreatorArts(publicKey?.toBase58() || '');
-  const { metadata, isLoading, pullAllMetadata, storeIndexer } = useMeta();
+  const { metadata, isLoading, pullAllMetadata, pullAllSiteData, storeIndexer } = useMeta();
   const [activeKey, setActiveKey] = useState(ArtworkViewState.Metaplex);
   const breakpointColumnsObj = {
     default: 4,
@@ -40,12 +40,14 @@ export const ArtworksView = () => {
 
   useEffect(() => {
     if (connected) {
-      setActiveKey(ArtworkViewState.Owned);
+      setActiveKey(ArtworkViewState.Metaplex);
+      async () => {
+        if(items.length === 0) pullAllMetadata()
+      }
     } else {
       setActiveKey(ArtworkViewState.Metaplex);
     }
   }, [connected, setActiveKey]);
-
   const artworkGrid = (
     <Masonry
       breakpointCols={breakpointColumnsObj}

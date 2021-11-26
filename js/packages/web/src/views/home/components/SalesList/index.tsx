@@ -47,7 +47,7 @@ export const SalesListView = () => {
       /> */}
       <Layout>
         <Content style={{ display: 'flex', flexWrap: 'wrap' }}>
-         {!noAuction && <Col style={{ width: '100%', marginTop: 32 }}>
+         <Col style={{ width: '100%', marginTop: 32 }}>
             <Row>
               <Tabs
                 activeKey={activeKey}
@@ -88,10 +88,10 @@ export const SalesListView = () => {
                   sales.map((sale, idx) => <SaleCard sale={sale} key={idx} />)}
               </Masonry>
             </Row>
-          </Col>}
-          {noAuction && <Col style={{ width: '100%', marginTop: 32 }}>
+          </Col>
+          {/* {noAuction && <Col style={{ width: '100%', marginTop: 32 }}>
            <p> Pattern auctions will be are starting soon..</p>
-          </Col>}
+          </Col>} */}
         </Content>
       </Layout>
     </>

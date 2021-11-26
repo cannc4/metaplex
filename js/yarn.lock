@@ -23064,11 +23064,6 @@ rc-input-number@~7.1.0:
     classnames "^2.2.5"
     rc-util "^5.9.8"
 
-rc-knob@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/rc-knob/-/rc-knob-1.0.1.tgz#7ac1aff3620fbc5f7900fa5212a017662f309ed5"
-  integrity sha512-MxCYOxKCPnpsZELeqKAsEPpZ7z8jcG9RLDoPqH4tCjsRoHaAUfIfYV+7SVGiLHdgB1vJc/25y8Z0pvZIkYFnVg==
-
 rc-mentions@~1.6.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/rc-mentions/-/rc-mentions-1.6.1.tgz#46035027d64aa33ef840ba0fbd411871e34617ae"

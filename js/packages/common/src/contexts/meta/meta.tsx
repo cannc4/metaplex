@@ -121,7 +121,6 @@ export function MetaProvider({ children = null as any }) {
 
   async function pullAllSiteData() {
     if (isLoading) return state;
-    // TODO
     if (!storeAddress) {
       if (isReady) {
         setIsLoading(false);
@@ -274,16 +273,16 @@ export function MetaProvider({ children = null as any }) {
     //@ts-ignore
     if (window.loadingData) {
       console.log('currently another update is running, so queue for 3s...');
-      update(undefined, undefined, userAccounts);
-      // const interval = setInterval(() => {
-      //   //@ts-ignore
-      //   if (window.loadingData) {
-      //     console.log('not running queued update right now, still loading');
-      //   } else {
-      //     console.log('running queued update');
-      //     clearInterval(interval);
-      //   }
-      // }, 3000);
+      const interval = setInterval(() => {
+        //@ts-ignore
+        if (window.loadingData) {
+          console.log('not running queued update right now, still loading');
+        } else {
+          console.log('running queued update');
+          update(undefined, undefined, userAccounts);
+          clearInterval(interval);
+        }
+      }, 3000);
     } else {
       console.log('no update is running, updating.');
       update(undefined, undefined, userAccounts);

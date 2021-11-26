@@ -50,7 +50,7 @@ export const AuctionItem = ({
   size,
   active,
 }: {
-    MIDI?: string;
+  MIDI?: string;
   item: AuctionViewItem;
   index: number;
   size: number;
@@ -73,18 +73,18 @@ export const AuctionItem = ({
     boxShadow: 'rgb(0 0 0 / 10%) 12px 2px 20px 14px',
     aspectRatio: '1/1',
   };
-  console.log('hERE', id)
+  
   return (
     <>
       {MIDI && <ActiveGrid base64MIDI={MIDI} />}
-      <ArtContent
+      {!MIDI && <ArtContent
         pubkey={id}
         category={MetadataCategory.HTML}
         className="artwork-image stack-item"
         style={style}
         active={active}
         allowMeshRender={true}
-      />
+      />}
     </>
   );
 };
@@ -94,11 +94,9 @@ export const AuctionView = () => {
   const { id } = useParams<{ id: string }>();
   const { endpoint } = useConnectionConfig();
   const auction = useAuction(id);
-  // console.log(auction)
   const [currentIndex, setCurrentIndex] = useState(0);
   const art = useArt(auction?.thumbnail.metadata.pubkey);
   const { ref, data }: any = useExtendedArt(auction?.thumbnail.metadata.pubkey);
-  console.log('dataCI', data)
   const creators = useCreators(auction);
   const { pullAuctionPage } = useMeta();
   useEffect(() => {
