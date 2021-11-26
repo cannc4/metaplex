@@ -486,7 +486,7 @@ export function Notifications() {
           {whitelistedCreatorsByCreator[m.info.updateAuthority]?.info?.name ||
             m.pubkey}{' '}
           wants you to approve that you helped create their art{' '}
-          <Link to={`/art/${m.pubkey}`}>here.</Link>
+          <Link to={`/item/${m.pubkey}`}>here.</Link>
         </span>
       ),
       action: async () => {

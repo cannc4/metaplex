@@ -863,7 +863,7 @@ export const AuctionCard = ({
           }}
         >
           Your sale has been ended please view your NFTs in{' '}
-          <Link to="/artworks">Library</Link>.
+          <Link to="/library">Library</Link>.
         </p>
         <Button
           onClick={() => setShowEndingBidModal(false)}
@@ -892,7 +892,7 @@ export const AuctionCard = ({
           }}
         >
           Your {auctionView.isInstantSale ? 'purchase' : 'bid'} has been
-          redeemed please view your NFTs in <Link to="/artworks">Library</Link>
+          redeemed please view your NFTs in <Link to="/library">Library</Link>
           .
         </p>
         <Button

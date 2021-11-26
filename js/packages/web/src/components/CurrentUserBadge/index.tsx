@@ -47,7 +47,7 @@ const UserActions = (props: { mobile?: boolean; onClick?: any }) => {
         (props.mobile ? (
           <div className="actions-buttons actions-user">
             {canCreate && (
-              <Link to={`/art/create`}>
+              <Link to={`/item/create`}>
                 <Button
                   onClick={() => {
                     props.onClick ? props.onClick() : null;
@@ -77,7 +77,7 @@ const UserActions = (props: { mobile?: boolean; onClick?: any }) => {
           >
             {canCreate && (
               <>
-                <Link to={`/art/create`} style={{ width: '100%' }}>
+                <Link to={`/item/create`} style={{ width: '100%' }}>
                   <Button className="metaplex-button-default" style={btnStyle}>
                     Create
                   </Button>

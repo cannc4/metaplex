@@ -89,7 +89,7 @@ export const ArtCreateView = () => {
 
   const gotoStep = useCallback(
     (_step: number) => {
-      history.push(`/art/create/${_step.toString()}`);
+      history.push(`/item/create/${_step.toString()}`);
       if (_step === 0) setStepsVisible(true);
     },
     [history],
@@ -1283,7 +1283,7 @@ const Congrats = (props: {
     const params = {
       text: "I've created a new NFT artwork on Metaplex, check it out!",
       url: `${window.location.origin
-        }/#/art/${props.nft?.metadataAccount.toString()}`,
+        }/#/item/${props.nft?.metadataAccount.toString()}`,
       hashtags: 'NFT,Crypto,Metaplex',
       // via: "Metaplex",
       related: 'Metaplex,Solana',
@@ -1298,7 +1298,7 @@ const Congrats = (props: {
       <>
         <div className="waiting-title">Sorry, there was an error!</div>
         <p>{props.alert}</p>
-        <Button onClick={_ => history.push('/art/create')}>
+        <Button onClick={_ => history.push('/item/create')}>
           Back to Create NFT
         </Button>
       </>
@@ -1319,7 +1319,7 @@ const Congrats = (props: {
         <Button
           className="metaplex-button"
           onClick={_ =>
-            history.push(`/art/${props.nft?.metadataAccount.toString()}`)
+            history.push(`/item/${props.nft?.metadataAccount.toString()}`)
           }
         >
           <span>See it in your collection</span>

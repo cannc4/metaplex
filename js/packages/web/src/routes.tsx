@@ -40,7 +40,7 @@ export function Routes() {
             />
             <Route
               exact
-              path="/art/create/:step_param?"
+              path="/item/create/:step_param?"
               component={() => <ArtCreateView />}
             />
             <Route
@@ -48,7 +48,17 @@ export function Routes() {
               path="/artworks/:id?"
               component={() => <ArtworksView />}
             />
-            <Route exact path="/art/:id" component={() => <ArtView />} />
+            <Route
+              exact
+              path="/items/:id?"
+              component={() => <ArtworksView />}
+            />
+            <Route
+              exact
+              path="/library/:id?"
+              component={() => <ArtworksView />}
+            />
+            <Route exact path="/item/:id" component={() => <ArtView />} />
             <Route exact path="/artists/:id" component={() => <ArtistView />} />
             <Route exact path="/artists" component={() => <ArtistsView />} />
 

@@ -56,7 +56,7 @@ export const ArtworksView = () => {
         ? items.map((m, idx) => {
             const id = m.pubkey;
             return (
-              <Link to={`/art/${id}`} key={idx}>
+              <Link to={`/item/${id}`} key={idx}>
                 <ArtCard
                   key={id}
                   pubkey={m.pubkey}
