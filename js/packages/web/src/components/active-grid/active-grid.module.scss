@@ -1,8 +1,7 @@
 .main {
   display: flex;
+  flex: 2;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
 }
 .pattern {
   display: flex;
@@ -10,27 +9,20 @@
   align-items: center !important;
   text-align: center !important;
 }
-.value {
-  font-family: 'Eczar', serif;
-  fill: #5afcf4;
-  font-size: 64px;
-}
+
 .menu {
   display: flex;
   z-index: 200;
   flex-direction: row;
-  padding-top: 50px;
   align-items: center !important;
   text-align: center !important;
-  padding-bottom: 50px;
+  padding-bottom: 32px;
 }
 
-.header {
-  height: 64px;
-  width: 64px;
+.header {  
   text-align: center;
   align-items: center;
-  background-color: rgb(132, 112, 112);
+  color: rgb(132, 112, 112);
 }
 
 .headerText {
@@ -45,20 +37,19 @@
 }
 
 .timepoint {
-  height: 25px;
+  height: 16px;
   width: 64px;
   text-align: center;
   align-items: center;
   font-size: 15px;
 }
 .value {
-  align-items: center !important;
-  text-align: center !important;
-  // padding-top: 24px;
-  background-color: rgb(255, 170, 0);
+  font-size: 32px;
+  color: rgb(255, 170, 0);
+  
 }
 .step {
-  height: 64px;
+  height: 48px;
   width: 64px;
   border: 1px;
   border-style: solid;
@@ -68,15 +59,11 @@
 }
 
 .activeStep {
-  height: 64px;
+  height: 48px;
   width: 64px;
   align-items: center;
   border: 1px;
   border-style: solid;
   text-align: center;
   background-color: rgb(255, 170, 0);
-}
-.horizontalSlider {
-  width: 100%;
-  margin: auto;
 }

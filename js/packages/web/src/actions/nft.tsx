@@ -82,6 +82,7 @@ export const mintNFT = async (
     description: string;
     image: string | undefined;
     animation_url: string | undefined;
+    MIDI?: string
     attributes: Attribute[] | undefined;
     external_url: string;
     properties: any;
@@ -253,7 +254,7 @@ export const mintNFT = async (
 
     // TODO: connect to testnet arweave
     let arweaveLink = `https://arweave.net/${metadataFile.transactionId}`
-    if(metadata.properties.MIDI) 
+    if(metadata.MIDI) 
       arweaveLink = `https://arweave.net/${metadataFile.transactionId}?type=MIDI`
     
     

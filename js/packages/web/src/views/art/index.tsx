@@ -40,7 +40,7 @@ export const ArtView = () => {
   if (art.type === ArtType.NFT) {
     badge = 'Unique';
   } else if (art.type === ArtType.Master) {
-    badge = 'NFT 0';
+    // badge = 'NFT 0';
     if (art.maxSupply !== undefined) {
       maxSupply = art.maxSupply.toString();
     } else {
@@ -52,8 +52,8 @@ export const ArtView = () => {
   
 
   let MIDI
-  if (data && data.properties.MIDI) {
-    MIDI = data!.properties.MIDI
+  if (data && data.MIDI) {
+    MIDI = data!.MIDI
   }
 
   // const { userAccounts } = useUserAccounts();
@@ -98,7 +98,7 @@ export const ArtView = () => {
             style={{ paddingRight: '30px' }}
           >
             {MIDI && <ActiveGrid base64MIDI={MIDI} />}
-            <ArtContent
+            {!MIDI && <ArtContent
               style={{ width: '100%', height: 'auto', margin: '0 auto' }}
               height={300}
               width={300}
@@ -107,7 +107,7 @@ export const ArtView = () => {
               active={true}
               allowMeshRender={true}
               artView={true}
-            />
+            />}
           </Col>
           {/* <Divider /> */}
           <Col

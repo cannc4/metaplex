@@ -120,7 +120,7 @@ export const ArtCreateView = () => {
     setStepsVisible(false);
     setMinting(true);
     console.log('MIDI', binary)
-    if (binary) metadata.properties.MIDI = binary
+    if (binary) metadata.MIDI = binary
     try {
       const _nft = await mintNFT(
         connection,

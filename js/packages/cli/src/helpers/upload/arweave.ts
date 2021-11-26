@@ -201,10 +201,10 @@ export async function arweaveUploadWithAudio(
   }
   
   console.log(imageFile, audioFile)
-  
+
   if (metadataFile?.transactionId) {
     let link = `https://arweave.net/${metadataFile.transactionId}`;
-    if(manifest.properties.MIDI) link = `${link}?type=MIDI`
+    if(manifest.MIDI) link = `${link}?type=MIDI`
     const imageLink = `https://arweave.net/${imageFile.transactionId}?ext=png`;
     log.debug(`File uploaded: ${link}`);
     let audioLink = null

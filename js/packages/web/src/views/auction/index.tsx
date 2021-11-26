@@ -144,7 +144,7 @@ export const AuctionView = () => {
         key={item.metadata.pubkey}
         item={item}
         index={index}
-        MIDI={data && data!.properties.MIDI ? data!.properties.MIDI : null}
+        MIDI={data && data!.MIDI ? data!.MIDI : null}
         size={arr.length}
         active={index === currentIndex}
       />

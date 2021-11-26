@@ -3,7 +3,7 @@ import { createRef, memo, useEffect } from 'react'
 import s from './active-grid.module.scss'
 import { observer } from 'mobx-react-lite'
 import { useTreeState } from '../../stores/Root'
-import { Knob, Arc, Value } from 'rc-knob'
+import { Knob } from "react-rotary-knob";
 // @ts-ignore
 import { useScreenshot, createFileName } from 'use-react-screenshot'
 import { useRouter } from 'next/router'
@@ -46,7 +46,6 @@ const _ActiveGrid = observer((props: GridProps) => {
   // TODO: Check is owner of the pattern
   if (!activeGrid?.patterns) return null
   const patterns = activeGrid?.patterns!
-
   const maxTime = Array.from({ length: 16 }, (_, i) => i + 1)
   return (
     <div className={s.main}>
@@ -59,23 +58,25 @@ const _ActiveGrid = observer((props: GridProps) => {
             isPlaying === true ? await activeGrid.stop() : await activeGrid.start()
           }
         >
-          {isPlaying === false ? 'PLAY' : 'STOP'}
+          <h3> {isPlaying === false ? 'PLAY' : 'STOP'}</h3>
         </button>
         {/* <button onClick={async () => activeGrid.resetGrid()}>{'reset'}</button>
         <button onClick={async () => activeGrid.randomize()}>{'randomize'}</button> */}
         &nbsp; &nbsp;
-        <Knob
-          size={90}
-          value={currentMultiplier}
-          angleOffset={220}
-          angleRange={280}
-          min={0}
-          max={activeGrid.multiplierTable.length}
-          onChange={(value: any) => activeGrid.updateClockMultipler(Math.floor(value))}
-        >
-          <Arc arcWidth={24} color="#ffaa00" background="#7c7c7c" />
-          <Value marginBottom={40} className="value" />
-        </Knob>
+        <div>
+          <Knob
+            value={currentMultiplier}
+            style={{ display: "inline-block" }}
+            min={1}
+            max={20}
+            unlockDistance={120}
+            preciseMode={false}
+            width={200}
+            height={200}
+            onChange={(value: any) => activeGrid.updateClockMultipler(Math.floor(value))}
+          />
+          {currentMultiplier}
+        </div>
       </div>
 
       <div className={s.timebar}>
