@@ -41,6 +41,7 @@ export const ArtView = () => {
     badge = 'Unique';
   } else if (art.type === ArtType.Master) {
     // badge = 'NFT 0';
+    badge = 'Unique';
     if (art.maxSupply !== undefined) {
       maxSupply = art.maxSupply.toString();
     } else {
@@ -188,14 +189,14 @@ export const ArtView = () => {
                 <div className="art-edition">{badge}</div>
               </Col>
             </Row>
-            {art.type === ArtType.Master && (
+            {/* {art.type === ArtType.Master && (
               <Row>
                 <Col>
                   <h6 style={{ marginTop: 5 }}>Max Supply</h6>
                   <div className="art-edition">{maxSupply}</div>
                 </Col>
               </Row>
-            )}
+            )} */}
             {/* <Button
                   onClick={async () => {
                     if(!art.mint) {

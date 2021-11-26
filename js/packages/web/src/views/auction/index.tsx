@@ -109,7 +109,8 @@ export const AuctionView = () => {
   if (art.type === ArtType.NFT) {
     edition = 'Unique';
   } else if (art.type === ArtType.Master) {
-    edition = 'NFT 0';
+    // edition = 'NFT 0';
+    edition = 'Unique';
   } else if (art.type === ArtType.Print) {
     edition = `${art.edition} of ${art.supply}`;
   }
