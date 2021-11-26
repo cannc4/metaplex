@@ -4,6 +4,7 @@ import { mintNFT, updateMetadata } from './commands/mint-nft';
 import { loadWalletKey } from './helpers/accounts';
 import { web3 } from '@project-serum/anchor';
 import { PublicKey } from '@solana/web3.js';
+import { loadCache } from './helpers/cache';
 
 program.version('0.0.1');
 log.setLevel('info');
@@ -12,10 +13,16 @@ programCommand('mint')
   .option('-u, --url <string>', 'metadata url')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   .action(async (directory, cmd) => {
-    const { keypair, env, url } = cmd.opts();
+    const { keypair, env } = cmd.opts();
+    const cacheContent = loadCache('temp', env);
+    const items: any = Object.values(cacheContent.items)
     const solConnection = new web3.Connection(web3.clusterApiUrl(env));
     const walletKeyPair = loadWalletKey(keypair);
-    await mintNFT(solConnection, walletKeyPair, url);
+    for (let i = 0; i < items.length; i++) {
+      const url = items[i].link;
+      console.log('url:', url)
+      await mintNFT(solConnection, walletKeyPair, url);  
+    }
   });
 
 programCommand('update-metadata')

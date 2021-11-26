@@ -44,13 +44,13 @@ import { useTokenList } from '../../contexts/tokenList';
 import { ActiveGrid } from '../../components/active-grid/active-grid';
 
 export const AuctionItem = ({
-  MIDIBinary,
+  MIDI,
   item,
   index,
   size,
   active,
 }: {
-    MIDIBinary?: string;
+    MIDI?: string;
   item: AuctionViewItem;
   index: number;
   size: number;
@@ -76,7 +76,7 @@ export const AuctionItem = ({
   console.log('hERE', id)
   return (
     <>
-      {MIDIBinary && <ActiveGrid base64MIDI={MIDIBinary} />}
+      {MIDI && <ActiveGrid base64MIDI={MIDI} />}
       <ArtContent
         pubkey={id}
         category={MetadataCategory.HTML}
@@ -144,7 +144,7 @@ export const AuctionView = () => {
         key={item.metadata.pubkey}
         item={item}
         index={index}
-        MIDIBinary={data && data!.MIDIBinary ? data!.MIDIBinary : null}
+        MIDI={data && data!.properties.MIDI ? data!.properties.MIDI : null}
         size={arr.length}
         active={index === currentIndex}
       />

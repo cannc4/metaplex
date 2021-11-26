@@ -33,7 +33,9 @@ export const SalesListView = () => {
   const { isLoading } = useMeta();
   const { connected } = useWallet();
   const { sales, hasResaleAuctions } = useSales(activeKey);
-
+  
+  const noAuction = sales.length === 0 && !isLoading
+  
   return (
     <>
       {/* <Banner
@@ -45,7 +47,7 @@ export const SalesListView = () => {
       /> */}
       <Layout>
         <Content style={{ display: 'flex', flexWrap: 'wrap' }}>
-          <Col style={{ width: '100%', marginTop: 32 }}>
+         {!noAuction && <Col style={{ width: '100%', marginTop: 32 }}>
             <Row>
               <Tabs
                 activeKey={activeKey}
@@ -86,7 +88,10 @@ export const SalesListView = () => {
                   sales.map((sale, idx) => <SaleCard sale={sale} key={idx} />)}
               </Masonry>
             </Row>
-          </Col>
+          </Col>}
+          {noAuction && <Col style={{ width: '100%', marginTop: 32 }}>
+           <p> Pattern auctions will be are starting soon..</p>
+          </Col>}
         </Content>
       </Layout>
     </>

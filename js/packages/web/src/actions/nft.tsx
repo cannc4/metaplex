@@ -53,7 +53,6 @@ const uploadToArweave = async (data: FormData): Promise<IArweaveResult> => {
       body: data,
     },
   );
-  console.log('uploadToArweave', resp)
 
   if (!resp.ok) {
     return Promise.reject(
@@ -81,7 +80,6 @@ export const mintNFT = async (
     name: string;
     symbol: string;
     description: string;
-    MIDIBinary?: string;
     image: string | undefined;
     animation_url: string | undefined;
     attributes: Attribute[] | undefined;
@@ -103,7 +101,6 @@ export const mintNFT = async (
     description: metadata.description,
     seller_fee_basis_points: metadata.sellerFeeBasisPoints,
     image: metadata.image,
-    MIDIBinary: metadata.MIDIBinary,
     animation_url: metadata.animation_url,
     attributes: metadata.attributes,
     external_url: metadata.external_url,
@@ -118,15 +115,6 @@ export const mintNFT = async (
     },
   };
 
-  // if (metadata.MIDIBinary){
-
-  //   const midiFile = {
-  //     type: "MIDI",
-  //     uri: metadata.MIDIBinary
-  //   }
-  //   metadataContent.properties.files.push(midiFile)
-  //   console.log(metadataContent)
-  // }
 
   const realFiles: File[] = [
     ...files,
@@ -240,7 +228,6 @@ export const mintNFT = async (
   data.append('transaction', txid);
   data.append('env', endpoint);
 
-  console.log(realFiles)
   const tags = realFiles.reduce(
     (acc: Record<string, Array<{ name: string; value: string }>>, f) => {
       acc[f.name] = [{ name: 'mint', value: mintKey }];
@@ -252,9 +239,9 @@ export const mintNFT = async (
   data.append('tags', JSON.stringify(tags));
   realFiles.map(f => data.append('file[]', f));
   // TODO: convert to absolute file name for image
-  console.log(data)
+
   const result: IArweaveResult = await uploadToArweave(data);
-  console.log(result)
+
   progressCallback(6);
 
   const metadataFile = result.messages?.find(
@@ -264,13 +251,12 @@ export const mintNFT = async (
     const updateInstructions: TransactionInstruction[] = [];
     const updateSigners: Keypair[] = [];
 
-    console.log(metadata)
-    const hashedData = sha256(metadata.MIDIBinary)
-    console.log('hashed', hashedData)
-
     // TODO: connect to testnet arweave
-    const arweaveLink = `https://arweave.net/${metadataFile.transactionId}?integrity=${hashedData}`;
-    console.log(arweaveLink.length)
+    let arweaveLink = `https://arweave.net/${metadataFile.transactionId}`
+    if(metadata.properties.MIDI) 
+      arweaveLink = `https://arweave.net/${metadataFile.transactionId}?type=MIDI`
+    
+    
     await updateMetadata(
       new Data({
         name: metadata.name,

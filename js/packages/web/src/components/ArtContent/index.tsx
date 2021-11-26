@@ -7,6 +7,7 @@ import { useCachedImage, useExtendedArt } from '../../hooks';
 import { Stream, StreamPlayerApi } from '@cloudflare/stream-react';
 import { PublicKey } from '@solana/web3.js';
 import { getLast } from '../../utils/utils';
+import { useParams } from 'react-router';
 
 const MeshArtContent = ({
   uri,
@@ -87,7 +88,8 @@ const VideoArtContent = ({
   active?: boolean;
 }) => {
   const [playerApi, setPlayerApi] = useState<StreamPlayerApi>();
-
+  const params: any = useParams()
+  console.log(params)
   const playerRef = useCallback(
     ref => {
       setPlayerApi(ref);
@@ -120,7 +122,7 @@ const VideoArtContent = ({
           loop={true}
           height={600}
           width={600}
-          controls={false}
+          controls={params.id ? true : false}
           videoDimensions={{
             videoHeight: 700,
             videoWidth: 400,
@@ -133,9 +135,9 @@ const VideoArtContent = ({
       <video
         className={className}
         playsInline={true}
-        autoPlay={true}
+        autoPlay={false}
         muted={true}
-        controls={true}
+        controls={params.id ? true : false}
         controlsList="nodownload"
         style={style}
         loop={true}

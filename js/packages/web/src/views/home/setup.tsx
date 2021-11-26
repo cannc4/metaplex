@@ -15,7 +15,7 @@ import { SetupVariables } from '../../components/SetupVariables';
 export const SetupView = () => {
   const [isInitalizingStore, setIsInitalizingStore] = useState(false);
   const connection = useConnection();
-  const { store } = useMeta();
+  const { store, isLoading } = useMeta();
   const { setStoreForOwner } = useStore();
   const history = useHistory();
   const wallet = useWallet();
@@ -64,7 +64,7 @@ export const SetupView = () => {
 
   return (
     <>
-      {!wallet.connected && (
+      {!isLoading && !wallet.connected && (
         <p>
           <Button type="primary" className="app-btn" onClick={connect}>
             Connect
@@ -72,7 +72,7 @@ export const SetupView = () => {
           to configure store.
         </p>
       )}
-      {wallet.connected && !store && (
+      {!isLoading && wallet.connected && store === null && (
         <>
           <p>Store is not initialized yet</p>
           <p>There must be some ◎ SOL in the wallet before initialization.</p>

@@ -84,7 +84,7 @@ export interface IMetadataExtension {
   seller_fee_basis_points: number;
 
   properties: {
-    MIDIBinary?: string
+    MIDI?: string
     files?: FileOrString[];
     category: MetadataCategory;
     maxSupply?: number;

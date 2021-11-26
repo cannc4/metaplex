@@ -32,10 +32,9 @@ export const ArtView = () => {
 
   const connection = useConnection();
   const art = useArt(id);
+  const { ref, data }: any = useExtendedArt(id);
 
-  console.log('art', art)
-
-
+  console.log('metadata', data)
   let badge = '';
   let maxSupply = '';
   if (art.type === ArtType.NFT) {
@@ -50,12 +49,13 @@ export const ArtView = () => {
   } else if (art.type === ArtType.Print) {
     badge = `${art.edition} of ${art.supply}`;
   }
-  const { ref, data }: any = useExtendedArt(id);
-  let MIDIBinary
-  if (data && data.MIDIBinary) {
+  
 
-    MIDIBinary = data!.MIDIBinary
+  let MIDI
+  if (data && data.properties.MIDI) {
+    MIDI = data!.properties.MIDI
   }
+
   // const { userAccounts } = useUserAccounts();
 
   // const accountByMint = userAccounts.reduce((prev, acc) => {
@@ -97,7 +97,7 @@ export const ArtView = () => {
             md={{ span: 12 }}
             style={{ paddingRight: '30px' }}
           >
-            {MIDIBinary && <ActiveGrid base64MIDI={MIDIBinary} />}
+            {MIDI && <ActiveGrid base64MIDI={MIDI} />}
             <ArtContent
               style={{ width: '100%', height: 'auto', margin: '0 auto' }}
               height={300}

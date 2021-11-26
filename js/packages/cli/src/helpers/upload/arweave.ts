@@ -119,3 +119,101 @@ export async function arweaveUpload(
     throw new Error(`No transaction ID for upload: ${index}`);
   }
 }
+
+export async function arweaveUploadWithAudio(
+  walletKeyPair,
+  anchorProgram,
+  env,
+  image,
+  audio,
+  manifestBuffer, // TODO rename metadataBuffer
+  manifest, // TODO rename metadata
+  index,
+) {
+  const fsStat = await stat(image);
+
+  let audioStats = null
+  if(audio){
+    audioStats = await stat(audio);
+  }
+
+  
+  const estimatedManifestSize = estimateManifestSize([
+    'image.png',
+    'audio.wav',
+    'metadata.json',
+  ]);
+  const storageCost = await fetchAssetCostToStore([
+    fsStat.size,
+    audioStats ? audioStats.size : null,
+    manifestBuffer.length,
+    estimatedManifestSize,
+  ]);
+  log.debug(`lamport cost to store ${image}: ${storageCost}`);
+
+  const instructions = [
+    anchor.web3.SystemProgram.transfer({
+      fromPubkey: walletKeyPair.publicKey,
+      toPubkey: ARWEAVE_PAYMENT_WALLET,
+      lamports: storageCost,
+    }),
+  ];
+
+  const tx = await sendTransactionWithRetryWithKeypair(
+    anchorProgram.provider.connection,
+    walletKeyPair,
+    instructions,
+    [],
+    'confirmed',
+  );
+  log.debug(`solana transaction (${env}) for arweave payment:`, tx);
+
+  const data = new FormData();
+  data.append('transaction', tx['txid']);
+  data.append('env', env);
+  if(audio){
+    data.append('file[]', fs.createReadStream(audio), {
+      filename: `audio.wav`,
+      contentType: 'audio/wav',
+    });
+  }
+  data.append('file[]', fs.createReadStream(image), {
+    filename: `image.png`,
+    contentType: 'image/png',
+  });
+  
+  data.append('file[]', manifestBuffer, 'metadata.json');
+
+  const result = await upload(data, manifest, index);
+
+  const metadataFile = result.messages?.find(
+    m => m.filename === 'manifest.json',
+  );
+  const imageFile = result.messages?.find(
+    m => m.filename === 'image.png',
+    );
+    
+  let audioFile = null
+  if(audio){
+    audioFile = result.messages?.find(
+      m => m.filename === 'audio.wav',
+      );
+  }
+  
+  console.log(imageFile, audioFile)
+  
+  if (metadataFile?.transactionId) {
+    let link = `https://arweave.net/${metadataFile.transactionId}`;
+    if(manifest.properties.MIDI) link = `${link}?type=MIDI`
+    const imageLink = `https://arweave.net/${imageFile.transactionId}?ext=png`;
+    log.debug(`File uploaded: ${link}`);
+    let audioLink = null
+    if(audioFile) {
+      audioLink = `https://arweave.net/${audioFile!.transactionId}?ext=wav`;
+    }
+    return [link, imageLink, audioLink];
+  } else {
+    // @todo improve
+    throw new Error(`No transaction ID for upload: ${index}`);
+  }
+}

@@ -21,6 +21,7 @@ import {
   EXTENSION_JSON,
   EXTENSION_PNG,
   CANDY_MACHINE_PROGRAM_ID,
+  EXTENSION_WAV,
 } from './helpers/constants';
 import {
   getBalance,
@@ -31,7 +32,7 @@ import {
   AccountAndPubkey,
 } from './helpers/accounts';
 import { Config } from './types';
-import { upload } from './commands/upload';
+import { upload, uploadWithAudio } from './commands/upload';
 import { verifyTokenMetadata } from './commands/verifyTokenMetadata';
 import { generateConfigurations } from './commands/generateConfigurations';
 import { loadCache, saveCache } from './helpers/cache';
@@ -128,6 +129,10 @@ programCommand('upload')
       return it.endsWith(EXTENSION_JSON);
     }).length;
 
+    const audioCount = files.filter(it => {
+      return it.endsWith(EXTENSION_WAV);
+    }).length;
+
     const parsedNumber = parseInt(number);
     const elemCount = parsedNumber ? parsedNumber : pngFileCount;
 
@@ -150,6 +155,140 @@ programCommand('upload')
     let warn = false;
     for (;;) {
       const successful = await upload(
+        files,
+        cacheName,
+        env,
+        keypair,
+        elemCount,
+        storage,
+        retainAuthority,
+        mutable,
+        rpcUrl,
+        ipfsCredentials,
+        awsS3Bucket,
+        batchSize,
+      );
+
+      if (successful) {
+        warn = false;
+        break;
+      } else {
+        warn = true;
+        log.warn('upload was not successful, rerunning');
+      }
+    }
+    const endMs = Date.now();
+    const timeTaken = new Date(endMs - startMs).toISOString().substr(11, 8);
+    log.info(
+      `ended at: ${new Date(endMs).toISOString()}. time taken: ${timeTaken}`,
+    );
+    if (warn) {
+      log.info('not all images have been uploaded, rerun this step.');
+    }
+  });
+
+programCommand('upload-with-audio')
+  .argument(
+    '<directory>',
+    'Directory containing images named from 0-n',
+    val => {
+      return fs.readdirSync(`${val}`).map(file => path.join(val, file));
+    },
+  )
+  .option('-n, --number <number>', 'Number of images to upload')
+  .option('-b, --batchSize <number>', 'Batch size - defaults to 1000')
+  .option(
+    '-s, --storage <string>',
+    'Database to use for storage (arweave, ipfs, aws)',
+    'arweave',
+  )
+  .option(
+    '--ipfs-infura-project-id <string>',
+    'Infura IPFS project id (required if using IPFS)',
+  )
+  .option(
+    '--ipfs-infura-secret <string>',
+    'Infura IPFS scret key (required if using IPFS)',
+  )
+  .option(
+    '--aws-s3-bucket <string>',
+    '(existing) AWS S3 Bucket name (required if using aws)',
+  )
+  .option('--no-retain-authority', 'Do not retain authority to update metadata')
+  .option('--no-mutable', 'Metadata will not be editable')
+  .option(
+    '-r, --rpc-url <string>',
+    'custom rpc url since this is a heavy command',
+  )
+  .action(async (files: string[], options, cmd) => {
+    const {
+      number,
+      keypair,
+      env,
+      cacheName,
+      storage,
+      ipfsInfuraProjectId,
+      ipfsInfuraSecret,
+      awsS3Bucket,
+      retainAuthority,
+      mutable,
+      rpcUrl,
+      batchSize,
+    } = cmd.opts();
+
+    if (storage === 'ipfs' && (!ipfsInfuraProjectId || !ipfsInfuraSecret)) {
+      throw new Error(
+        'IPFS selected as storage option but Infura project id or secret key were not provided.',
+      );
+    }
+    if (storage === 'aws' && !awsS3Bucket) {
+      throw new Error(
+        'aws selected as storage option but existing bucket name (--aws-s3-bucket) not provided.',
+      );
+    }
+    if (!(storage === 'arweave' || storage === 'ipfs' || storage === 'aws')) {
+      throw new Error(
+        "Storage option must either be 'arweave', 'ipfs', or 'aws'.",
+      );
+    }
+    const ipfsCredentials = {
+      projectId: ipfsInfuraProjectId,
+      secretKey: ipfsInfuraSecret,
+    };
+
+    const pngFileCount = files.filter(it => {
+      return it.endsWith(EXTENSION_PNG);
+    }).length;
+    const jsonFileCount = files.filter(it => {
+      return it.endsWith(EXTENSION_JSON);
+    }).length;
+
+    const audioCount = files.filter(it => {
+      return it.endsWith(EXTENSION_WAV);
+    }).length;
+
+    const parsedNumber = parseInt(number);
+    const elemCount = parsedNumber ? parsedNumber : pngFileCount;
+
+    if (pngFileCount !== jsonFileCount) {
+      throw new Error(
+        `number of png files (${pngFileCount}) is different than the number of json files (${jsonFileCount})`,
+      );
+    }
+
+    if (elemCount < pngFileCount) {
+      throw new Error(
+        `max number (${elemCount})cannot be smaller than the number of elements in the source folder (${pngFileCount})`,
+      );
+    }
+
+    log.info(`Beginning the upload for ${elemCount} (png+json) pairs`);
+
+    const startMs = Date.now();
+    log.info('started at: ' + startMs.toString());
+    let warn = false;
+    for (; ;) {
+      const successful = await uploadWithAudio(
         files,
         cacheName,
         env,
