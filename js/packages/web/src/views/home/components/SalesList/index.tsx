@@ -1,6 +1,6 @@
 import { useWallet } from '@solana/wallet-adapter-react';
 import { Col, Layout, Row, Tabs } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Masonry from 'react-masonry-css';
 
 import { useMeta } from '../../../../contexts';
@@ -30,11 +30,19 @@ const breakpointColumnsObj = {
 
 export const SalesListView = () => {
   const [activeKey, setActiveKey] = useState(LiveAuctionViewState.All);
-  const { isLoading } = useMeta();
+  const { isLoading, pullAuctionPage } = useMeta();
   const { connected } = useWallet();
-  const { sales, hasResaleAuctions } = useSales(activeKey);
+  const { sales, hasResaleAuctions }: any = useSales(activeKey);
   
-  const noAuction = sales.length === 0 && !isLoading
+  useEffect( () => {
+    for (let i = 0; i < sales.length; i++) {
+      if (!sales[i].auction || sales[i].auction.auctionDataExtended === undefined){
+        const auctionId = sales[i].auction.pubkey;
+        pullAuctionPage(auctionId)
+      }
+    }
+
+  }, [isLoading])
   
   return (
     <>

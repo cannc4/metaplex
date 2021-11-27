@@ -14,11 +14,13 @@ type GridProps = {
 const _ActiveGrid = observer((props: GridProps) => {
   const { activeGrid } = useTreeState()
   const { asPath } = useRouter()
-
-
   const { currentPos, isPlaying, currentMultiplier, bpm } = activeGrid
   const ref: any = createRef()
   const [image, takeScreenShot] = useScreenshot()
+
+  useEffect(() => {
+    activeGrid.updateCurrentPos(0)
+  }, [])
 
   const download = (image: any, { name = 'img', extension = 'png' } = {}) => {
     const a = document.createElement('a')
@@ -67,8 +69,8 @@ const _ActiveGrid = observer((props: GridProps) => {
           <Knob
             value={currentMultiplier}
             style={{ display: "inline-block" }}
-            min={1}
-            max={20}
+            min={0}
+            max={activeGrid.multiplierTable.length}
             unlockDistance={120}
             preciseMode={false}
             width={200}
