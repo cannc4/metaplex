@@ -20,6 +20,7 @@ const _ActiveGrid = observer((props: GridProps) => {
 
   useEffect(() => {
     activeGrid.updateCurrentPos(0)
+    activeGrid.updateClockMultipler(0)
   }, [])
 
   const download = (image: any, { name = 'img', extension = 'png' } = {}) => {

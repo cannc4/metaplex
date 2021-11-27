@@ -42,7 +42,7 @@ export const ArtworksView = () => {
     if (connected) {
       setActiveKey(ArtworkViewState.Metaplex);
       async () => {
-        if(items.length === 0) pullAllMetadata()
+        if(items.length === 0) pullAllMetadata() // TODO
       }
     } else {
       setActiveKey(ArtworkViewState.Metaplex);
